@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+
+        <link rel="stylesheet" href="design/theme/theme.css">
+        <link rel="stylesheet" href="design/vendor/bootstrap.css">
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+
+                    <div class="formWrapper">
+                        <form id="form" name="formsendemail">
+                            <!--input-->
+                            <div class="form-group">
+                                <label for="formName">Name</label>
+                                <input name="name"
+                                       type="text" class="form-control" id="formName" placeholder="name">
+                                <small class="form-text text-muted">Enter you name</small>
+                            </div>
+                            <!--input-->
+                            <!--input-->
+                            <div class="form-group">
+                                <label for="formEmail">Email</label>
+                                <input name="email"
+                                       type="text" class="form-control" id="formEmail" aria-describedby="emailHelp" placeholder="email">
+                                <small class="form-text text-muted">Enter you email</small>
+                            </div>
+                            <!--input-->
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+
+                    <p></p>
+                    <!--alert-->
+                    <div id="alertSuccess" class="alert alert-success  op0 alertsAnimate" role="alert">
+                    </div>
+                    <!--alert-->
+                    <!--alert-->
+                    <div id="alertAlert" class="alert alert-danger op0 alertsAnimate" role="alert">
+                    </div>
+                    <!--alert-->
+
+            </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+
+
+        <script>
+            var form       = document.querySelector('#form');
+            var formInputs = form.getElementsByTagName('input');
+            var formData   = {};
+
+
+
+            var alerts = {
+                alertSuccess: document.querySelector('#alertSuccess'),
+                alertAlert: document.querySelector('#alertAlert')
+            };
+
+            for (var prop in alerts) {
+                alerts[prop];
+            }
+
+
+
+
+
+
+            form.addEventListener('submit' ,function (e) {
+                e.preventDefault();
+
+                for (var i = 0; i < formInputs.length; i++) {
+//                    console.log(formInputs[i]);
+                    formData[formInputs[i].name] = formInputs[i].value;
+                }
+
+                // 1.
+                var xhr = new XMLHttpRequest();
+                // 2. Конфигурируем его: GET-запрос на URL 'phones.json'
+                xhr.open('delete', '/sendemail', false);
+                xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+                // 3. Отсылаем запрос
+                console.log(formData);
+
+                xhr.send(JSON.stringify(formData));
+
+
+
+                for (var i = 0; i < formInputs.length; i++) {
+//                    console.log(formInputs[i]);
+                    formInputs[i].value ='';
+                }
+
+
+                // 4. Если код ответа сервера не 200, то это ошибка
+                if (xhr.status === 200) {
+                    alerts.alertSuccess.classList.remove('op0');
+                    alerts.alertSuccess.innerHTML = xhr.responseText;
+                    setTimeout(function () {
+                        alerts.alertSuccess.classList.remove('op1')
+                        alerts.alertSuccess.classList.add('op0');
+                    }, 2000);
+                } else {
+                    alerts.alertAlert.classList.remove('op0');
+                    alerts.alertAlert.innerHTML = xhr.status + ': ' + xhr.statusText;
+                    setTimeout(function () {
+                        alerts.alertAlert.classList.remove('op1');
+                        alerts.alertAlert.classList.add('op0');
+                    }, 4000);
+                }
+
+            })
+        </script>
+    </body>
+</html>

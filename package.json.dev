@@ -1,0 +1,16 @@
+{
+  "name": "ex-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "supervisor node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
