@@ -1,64 +1,55 @@
+//Require
 var express = require('express');
-var app = express();
+var app     = express();
+
+
+// var path = require('path');
+
+// console.log('__dirname = ', __dirname);
+// console.log('__dirname resolved = ', path.resolve(__dirname, './resolved string'));
 
 
 
-
-
-app.use(express.static('public'));
-
-var bodyParser = require('body-parser');
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-
-var myLogger = function (req, res, next) {
-    console.log('__LOGGED__');
-    next();
-};
-
-app.use(myLogger);
-
-
-app.delete('/sendemail', function (req, res) {
-    console.log('form name = ' + req.body.name);
-    console.log('form email = ' + req.body.email);
-
-
-    res.send('form sended ! Action method: ' + req.method);
-    // res.status(500).send('form sended !');
-});
+//Shared folders
+app.use(express.static('assets'));
+app.use(express.static('bundles'));
 
 
 
-
-
-
-
-
-
-
-//Templates
-app.set('views', './src/views');
+//Tpl engine
+app.set('views', './components/theme');
 app.engine('ejs', require('ejs-locals'));
 app.set('view engine', 'ejs');
 
+
+
+//Routes
 app.get('/', function (req, res) {
     res.render('index', {
-        title: 'Hey',
-        message: 'Hello there!'
+        title: 'Page index'
+    });
+});
+
+app.get('/product-list', function (req, res) {
+    res.render('product-list', {
+        title: 'Page Product List',
+    });
+});
+
+app.get('/product', function (req, res) {
+    res.render('product', {
+        title: 'Page Product',
     });
 });
 
 
 
 
+//Server config
+var port = 3000;
 
-
-
-
-//Open port for ewb browsers
-app.listen(3000, function () {
-    console.log('app.js listen:');
-    console.log('http://localhost:3000');
+app.listen( port, function () {
+    console.log('app.js listen: http://localhost:' + port);
 });
+
+

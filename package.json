@@ -1,17 +1,13 @@
 {
   "name": "ex-2",
   "version": "1.0.0",
-  "description": "",
+  "description": "Revolution Shop Ejs Tpl.",
   "main": "app.js",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "ejs": "^2.6.1",
-    "ejs-locals": "^1.0.2",
-    "express": "^4.16.3",
-    "mongodb": "^3.0.7"
-  },
   "scripts": {
-    "start": "node app.js"
+    "app": "node app.js",
+    "app.bs": "node app.bs.js",
+    "app.svr": "supervisor --ignore-symlinks -w ./components -e js,ejs,styl app.js",
+    "bs":"browser-sync start --proxy 'localhost:3000' --files './bundles/*.*' --no-ui --no-open --ws --no-inject-changes"
   },
   "keywords": [],
   "author": "",
